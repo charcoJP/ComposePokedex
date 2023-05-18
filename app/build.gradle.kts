@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "jp.charco.compose"
+    namespace = "jp.charco.composepokedex"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "jp.charco.compose"
+        applicationId = "jp.charco.composepokedex"
         minSdk = 26
         targetSdk = 33
         versionCode = 1

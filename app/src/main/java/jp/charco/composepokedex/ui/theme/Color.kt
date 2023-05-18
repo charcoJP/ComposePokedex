@@ -1,4 +1,4 @@
-package jp.charco.compose.ui.theme
+package jp.charco.composepokedex.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
