@@ -14,5 +14,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "ComposePokedex"
+
 include(":app")
+include(":data")
