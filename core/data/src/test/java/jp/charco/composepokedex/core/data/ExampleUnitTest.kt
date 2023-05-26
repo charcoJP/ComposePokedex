@@ -1,4 +1,4 @@
-package jp.charco.composepokedex.data
+package jp.charco.composepokedex.core.data
 
 import org.junit.Test
 

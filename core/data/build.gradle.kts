@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "jp.charco.composepokedex.data"
+    namespace = "jp.charco.composepokedex.core.data"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
