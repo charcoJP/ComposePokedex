@@ -11,6 +11,11 @@ androidxCore = "1.10.1"
 androidxLifecycle = "2.6.1"
 androidxActivityCompose = "1.7.2"
 
+retrofit = "2.9.0"
+retrofitKotlinxSerializationJson = "1.0.0"
+kotlinxSerializationJson = "1.5.0"
+okhttp = "4.10.0"
+
 junit = "4.13.2"
 
 androidxTestJunit = "1.1.5"
@@ -40,6 +45,11 @@ compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 

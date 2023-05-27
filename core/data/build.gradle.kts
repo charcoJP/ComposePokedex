@@ -46,5 +46,10 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.compiler)
 
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.okhttp.logging)
+
     testImplementation(libs.junit)
 }
