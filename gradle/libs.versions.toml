@@ -14,7 +14,7 @@ androidxActivityCompose = "1.7.2"
 retrofit = "2.9.0"
 retrofitKotlinxSerializationJson = "1.0.0"
 kotlinxSerializationJson = "1.5.0"
-okhttp = "4.10.0"
+okhttp = "4.11.0"
 
 junit = "4.13.2"
 
