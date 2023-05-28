@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -7,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "jp.charco.composepokedex.core.data"
+    namespace = "jp.charco.composepokedex.core.common"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -36,22 +38,10 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
-    implementation(project(":core:common"))
-
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.compiler)
-
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.kotlin.serialization)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.okhttp.logging)
 
     testImplementation(libs.junit)
 }
