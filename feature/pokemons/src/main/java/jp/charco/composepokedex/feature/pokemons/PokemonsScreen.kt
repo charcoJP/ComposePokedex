@@ -1,8 +1,11 @@
 package jp.charco.composepokedex.feature.pokemons
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import jp.charco.composepokedex.core.data.network.response.Pokemon
 
 @Composable
 fun PokemonsScreen(
@@ -35,29 +39,43 @@ fun Contents(uiState: MainUiState, contentPadding: PaddingValues) {
         is MainUiState.Error -> Text("エラー")
         MainUiState.Loading -> CircularProgressIndicator()
         is MainUiState.Success -> {
-            LazyColumn(modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
+            ) {
                 items(uiState.pokemonList) {
-                    Card(
-                        shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    ) {
-                        Row {
-                            AsyncImage(
-                                model = it.imageUrl,
-                                contentDescription = it.name,
-                            )
-                            Text(
-                                text = it.name,
-                                modifier = Modifier.padding(
-                                    horizontal = 16.dp,
-                                    vertical = 24.dp
-                                )
-                            )
-                        }
-                    }
+                    PokemonRow(it)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PokemonRow(pokemon: Pokemon) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                horizontal = 16.dp,
+                vertical = 4.dp
+            )
+    ) {
+        Row {
+            AsyncImage(
+                model = pokemon.imageUrl,
+                contentDescription = pokemon.name,
+                modifier = Modifier
+                    .height(100.dp)
+                    .padding(end = 16.dp)
+            )
+            Column {
+                Text(text = "No.${pokemon.number}", style = MaterialTheme.typography.labelMedium)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = pokemon.name, style = MaterialTheme.typography.headlineMedium)
             }
         }
     }
