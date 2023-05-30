@@ -4,18 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 import jp.charco.composepokedex.feature.pokemons.PokemonsScreen
 import jp.charco.composepokedex.ui.theme.ComposePokedexTheme
+import jp.charco.composepokedex.ui.theme.fontFamily
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopBar() {
-    CenterAlignedTopAppBar(title = { Text("ComposePokedex") })
+    TopAppBar(title = { Text("ComposePokedex", fontFamily = fontFamily) })
 }
 
 @Preview(showBackground = true)
