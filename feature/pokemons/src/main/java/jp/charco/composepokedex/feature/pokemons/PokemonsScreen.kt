@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -39,15 +39,15 @@ import jp.charco.composepokedex.core.data.network.response.Pokemon
 
 @Composable
 fun PokemonsScreen(
-    contentPadding: PaddingValues,
+    navController: NavController,
     viewModel: PokemonsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
-    Contents(uiState, contentPadding)
+    Contents(uiState)
 }
 
 @Composable
-fun Contents(uiState: MainUiState, contentPadding: PaddingValues) {
+fun Contents(uiState: MainUiState) {
     when (uiState) {
         is MainUiState.Error -> Text("エラー")
         MainUiState.Loading -> CircularProgressIndicator()
@@ -55,7 +55,6 @@ fun Contents(uiState: MainUiState, contentPadding: PaddingValues) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(contentPadding)
             ) {
                 items(uiState.pokemonList) {
                     PokemonRow(it)
