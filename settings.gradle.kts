@@ -20,4 +20,5 @@ rootProject.name = "ComposePokedex"
 include(":app")
 include(":core:common")
 include(":core:data")
+include(":core:ui")
 include(":feature:pokemons")
