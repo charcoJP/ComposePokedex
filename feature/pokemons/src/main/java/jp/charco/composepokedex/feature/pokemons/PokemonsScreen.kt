@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -30,8 +30,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import androidx.palette.graphics.Palette
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -42,23 +44,35 @@ fun PokemonsScreen(
     navController: NavController,
     viewModel: PokemonsViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
-    Contents(uiState)
-}
+    val pagingItems = viewModel.pagingFlow.collectAsLazyPagingItems()
 
-@Composable
-fun Contents(uiState: MainUiState) {
-    when (uiState) {
-        is MainUiState.Error -> Text("エラー")
-        MainUiState.Loading -> CircularProgressIndicator()
-        is MainUiState.Success -> {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                items(uiState.pokemonList) {
-                    PokemonRow(it)
-                }
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        if (pagingItems.loadState.refresh == LoadState.Loading) {
+            item {
+                Text(
+                    text = "Waiting for items to load from the backend",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                )
+            }
+        }
+
+        items(
+            count = pagingItems.itemCount,
+            key = pagingItems.itemKey()
+        ) { index ->
+            val item = pagingItems[index]
+            item?.let { PokemonRow(it) }
+        }
+
+        if (pagingItems.loadState.append == LoadState.Loading) {
+            item {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                )
             }
         }
     }
@@ -106,7 +120,10 @@ private fun PokemonRow(pokemon: Pokemon) {
                     .padding(start = 16.dp)
                     .align(Alignment.CenterVertically),
             ) {
-                Text(text = "No.${pokemon.number}", style = MaterialTheme.typography.labelMedium)
+                Text(
+                    text = "No.${pokemon.number}",
+                    style = MaterialTheme.typography.labelMedium
+                )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = pokemon.name, style = MaterialTheme.typography.headlineMedium)
             }
