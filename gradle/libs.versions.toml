@@ -51,7 +51,7 @@ androidx-palette = { module = "androidx.palette:palette", version.ref = "android
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidxPaging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
 
-compose-bom = { module = "androidx.compose:compose-bom", version = "2023.05.01" }
+compose-bom = { module = "androidx.compose:compose-bom", version = "2023.06.00" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
