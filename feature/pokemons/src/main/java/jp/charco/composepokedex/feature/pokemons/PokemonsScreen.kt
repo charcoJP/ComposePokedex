@@ -38,6 +38,7 @@ import androidx.palette.graphics.Palette
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import jp.charco.composepokedex.core.data.network.response.Pokemon
+import jp.charco.composepokedex.core.ui.theme.fontFamily
 
 @Composable
 fun PokemonsScreen(
@@ -122,10 +123,15 @@ private fun PokemonRow(pokemon: Pokemon) {
             ) {
                 Text(
                     text = "No.${pokemon.number}",
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.labelMedium,
+                    fontFamily = fontFamily
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = pokemon.name, style = MaterialTheme.typography.headlineMedium)
+                Text(
+                    text = pokemon.name,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontFamily = fontFamily
+                )
             }
         }
     }
