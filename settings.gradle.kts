@@ -22,3 +22,5 @@ include(":core:common")
 include(":core:data")
 include(":core:ui")
 include(":feature:pokemons")
+include(":feature:pokemon-detail")
+
