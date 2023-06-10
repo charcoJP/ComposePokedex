@@ -1,4 +1,4 @@
-package jp.charco.composepokedex.ui.theme
+package jp.charco.composepokedex.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

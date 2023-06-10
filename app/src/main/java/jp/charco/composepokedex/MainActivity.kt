@@ -15,15 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import jp.charco.composepokedex.feature.pokemons.PokemonsScreen
+import jp.charco.composepokedex.core.ui.theme.ComposePokedexTheme
+import jp.charco.composepokedex.core.ui.theme.fontFamily
 import jp.charco.composepokedex.feature.pokemons.navigation.pokemonsNavGraph
 import jp.charco.composepokedex.feature.pokemons.navigation.pokemonsNavigationRoute
-import jp.charco.composepokedex.ui.theme.ComposePokedexTheme
-import jp.charco.composepokedex.ui.theme.fontFamily
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
