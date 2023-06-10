@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -30,7 +31,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
@@ -42,7 +42,7 @@ import jp.charco.composepokedex.core.ui.theme.fontFamily
 
 @Composable
 fun PokemonsScreen(
-    navController: NavController,
+    onPokemonClick: (String) -> Unit,
     viewModel: PokemonsViewModel = hiltViewModel(),
 ) {
     val pagingItems = viewModel.pagingFlow.collectAsLazyPagingItems()
@@ -64,7 +64,7 @@ fun PokemonsScreen(
             key = pagingItems.itemKey()
         ) { index ->
             val item = pagingItems[index]
-            item?.let { PokemonRow(it) }
+            item?.let { PokemonRow(it, onPokemonClick) }
         }
 
         if (pagingItems.loadState.append == LoadState.Loading) {
@@ -79,14 +79,19 @@ fun PokemonsScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PokemonRow(pokemon: Pokemon) {
+private fun PokemonRow(
+    pokemon: Pokemon,
+    onPokemonClick: (String) -> Unit,
+) {
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
     val palette = remember(bitmap) { bitmap?.let { Palette.from(it).generate() } }
     val cardBackgroundColor = palette?.dominantSwatch?.rgb?.let { Color(it) } ?: Color.White
 
     OutlinedCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        onClick = { onPokemonClick(pokemon.number) },
         modifier = Modifier
             .fillMaxSize()
             .padding(

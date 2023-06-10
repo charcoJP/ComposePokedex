@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
     implementation(project(":feature:pokemons"))
+    implementation(project(":feature:pokemon-detail"))
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

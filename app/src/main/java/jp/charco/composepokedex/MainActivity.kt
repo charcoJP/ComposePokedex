@@ -19,8 +19,11 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import jp.charco.composepokedex.core.ui.theme.ComposePokedexTheme
 import jp.charco.composepokedex.core.ui.theme.fontFamily
+import jp.charco.composepokedex.feature.pokemon.detail.navigation.navigateToPokemonDetail
+import jp.charco.composepokedex.feature.pokemon.detail.navigation.pokemonDetailNavGraph
 import jp.charco.composepokedex.feature.pokemons.navigation.pokemonsNavGraph
 import jp.charco.composepokedex.feature.pokemons.navigation.pokemonsNavigationRoute
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +42,10 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             modifier = Modifier.padding(it)
                         ) {
-                            pokemonsNavGraph(navController)
+                            pokemonsNavGraph(onPokemonClick = { pokemonNumber ->
+                                navController.navigateToPokemonDetail(pokemonNumber)
+                            })
+                            pokemonDetailNavGraph()
                         }
                     }
                 }
