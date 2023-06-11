@@ -30,12 +30,18 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
             .callFactory(okHttpClient)
             .addConverterFactory(
-                Json.asConverterFactory("application/json".toMediaType())
+                json.asConverterFactory("application/json".toMediaType())
             )
             .build()
     }
