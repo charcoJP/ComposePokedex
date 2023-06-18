@@ -3,6 +3,7 @@ package jp.charco.composepokedex.feature.pokemons
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +45,7 @@ import coil.request.ImageRequest
 import jp.charco.composepokedex.core.data.network.response.Pokemon
 import jp.charco.composepokedex.core.ui.theme.fontFamily
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PokemonsScreen(
     onPokemonClick: (String) -> Unit,
@@ -47,35 +53,39 @@ fun PokemonsScreen(
 ) {
     val pagingItems = viewModel.pagingFlow.collectAsLazyPagingItems()
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        if (pagingItems.loadState.refresh == LoadState.Loading) {
-            item {
-                Text(
-                    text = "Waiting for items to load from the backend",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.CenterHorizontally)
-                )
+    val refreshState = rememberPullRefreshState(
+        refreshing = pagingItems.loadState.refresh == LoadState.Loading,
+        onRefresh = pagingItems::refresh,
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pullRefresh(refreshState)
+    ) {
+        LazyColumn {
+            items(
+                count = pagingItems.itemCount,
+                key = pagingItems.itemKey()
+            ) { index ->
+                val item = pagingItems[index]
+                item?.let { PokemonRow(it, onPokemonClick) }
+            }
+
+            if (pagingItems.loadState.append == LoadState.Loading) {
+                item {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.CenterHorizontally)
+                    )
+                }
             }
         }
-
-        items(
-            count = pagingItems.itemCount,
-            key = pagingItems.itemKey()
-        ) { index ->
-            val item = pagingItems[index]
-            item?.let { PokemonRow(it, onPokemonClick) }
-        }
-
-        if (pagingItems.loadState.append == LoadState.Loading) {
-            item {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.CenterHorizontally)
-                )
-            }
-        }
+        PullRefreshIndicator(
+            refreshing = pagingItems.loadState.refresh == LoadState.Loading,
+            state = refreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
