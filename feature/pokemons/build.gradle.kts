@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    // TODO: PullToRefresh のために追加。material3でPullToRefreshが実装されたら消したい
+    implementation(libs.compose.material)
 
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
