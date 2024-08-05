@@ -6,7 +6,7 @@ targetSdk = "34"
 androidGradlePlugin = "8.0.2"
 kotlin = "1.8.21"
 
-hilt = "2.46.1"
+hilt = "2.52"
 androidxCore = "1.10.1"
 androidxLifecycle = "2.6.1"
 androidxActivityCompose = "1.7.2"
